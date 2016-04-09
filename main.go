@@ -10,5 +10,5 @@ func main() {
 	router.LoadHTMLGlob("templates/*")
 
 	router.GET("/", handlers.RootHandler())
-	router.Run(":8080")
+	router.Run(":3000")
 }
