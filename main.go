@@ -7,6 +7,7 @@ import (
 
 func main() {
 	router := gin.Default()
+	router.Static("/assets", "./assets")
 	router.LoadHTMLGlob("templates/*")
 
 	router.GET("/", handlers.RootHandler())

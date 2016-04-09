@@ -6,6 +6,6 @@ import (
 
 func RootHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.HTML(200, "index.tmpl", "")
+		c.HTML(200, "layout.html", "index.html")
 	}
 }

@@ -1,0 +1,20 @@
+body {
+  width: 100%;
+  color: #333;
+  padding: 30px;
+  min-height: 100%;
+  letter-spacing: .05em;
+  box-sizing: border-box;
+  font-family: 'Lato', sans-serif;
+}
+
+header {
+  padding: 1em;
+}
+
+footer {
+  position: absolute;
+  padding: 10px 0;
+  bottom: 0px;
+  margin: auto;
+}
