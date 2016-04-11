@@ -24,5 +24,6 @@ func main() {
 	authorized := router.Group("/admin", gin.BasicAuth(gin.Accounts{os.Getenv("BasicAuthUSER"): os.Getenv("BasicAuthPASSWORD"),}))
 	authorized.GET("/", AdminHandler())
 	router.GET("/", RootHandler())
+	router.GET("/logout", LogoutHandler())
 	router.Run(":3000")
 }
