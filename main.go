@@ -14,10 +14,9 @@ func main() {
 	router = gin.Default()
 	router.Static("/assets", "./assets")
 
-	// setup gomniauth
 	gomniauth.SetSecurityKey(signature.RandomKey(64))
 	gomniauth.WithProviders(
-		facebook.New(os.Getenv("FB_CLIENT_ID"), os.Getenv("FB_SECRET_KEY"), "http://localhost:3000/auth/callback/facebook"),
+		facebook.New(os.Getenv("FB_CLIENT_ID"), os.Getenv("FB_SECRET_KEY"), os.Getenv("FB_HOST")),
 	)
 
 	router.GET("/auth/login/facebook", LoginHandler())
