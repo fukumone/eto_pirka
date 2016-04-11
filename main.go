@@ -1,15 +1,19 @@
 package main
 
 import (
-	"github.com/t-fukui/eto_pirka/handlers"
 	"github.com/gin-gonic/gin"
 )
 
-func main() {
-	router := gin.Default()
-	router.Static("/assets", "./assets")
-	router.LoadHTMLGlob("templates/*")
+var router *gin.Engine
 
-	router.GET("/", handlers.RootHandler())
+func main() {
+	router = gin.Default()
+	router.Static("/assets", "./assets")
+
+	authorized := router.Group("/admin", gin.BasicAuth(gin.Accounts{"root": "password",}))
+
+	authorized.GET("/", AdminHandler())
+
+	router.GET("/", RootHandler())
 	router.Run(":3000")
 }
