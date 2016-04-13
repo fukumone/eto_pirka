@@ -9,6 +9,12 @@
   <body>
     <header>
       <h1><a href="/">Eto Pirka SNS</a></h1>
+      {{if .UserData}}
+        {{range .UserData}}{{.name}}{{end}} |
+        <a href="/logout">ログアウト</a>
+      {{end}}
+      <p>
+  </p>
     </header>
     <div id="content">
       {{template "content" .}}

@@ -1,5 +1,10 @@
 {{define "content"}}
-一覧
-<a href="/auth/login/facebook">Facebook認証</a> |
-<a href="/logout">ログアウト</a>
+  <h3>コミュニティ一覧</h3>
+  {{range .Communities}}
+  <table>
+    <tr>
+      <td>{{.Name}}</td>
+    </tr>
+  </table>
+  {{end}}
 {{end}}

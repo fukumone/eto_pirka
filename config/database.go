@@ -1,13 +1,13 @@
-package db
+package config
 
 import (
-  "os"
-  "log"
   "fmt"
+  "log"
+  "os"
 
+  _ "github.com/go-sql-driver/mysql"
   "github.com/jinzhu/gorm"
   "github.com/joho/godotenv"
-  _ "github.com/go-sql-driver/mysql"
 )
 
 func env_load() {
