@@ -11,7 +11,6 @@ func FilterHandler(c *gin.Context) {
 		c.Writer.Header()["Location"] = []string{"/login"}
 		c.Writer.WriteHeader(http.StatusTemporaryRedirect)
 	} else if err != nil {
-		// some other error
 		panic(err.Error())
 	} else {
 		// success

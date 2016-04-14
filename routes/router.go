@@ -13,10 +13,12 @@ import (
 var (
 	router = gin.Default()
 	dbConnect = db.InitDB()
+	UserData = map[string]interface{}{}
 )
 
 func Init() *gin.Engine {
 	router.Use(FilterHandler)
+	router.Use(CookieSetup)
 	router.Static("/assets", "./assets")
 
 	gomniauth.SetSecurityKey(signature.RandomKey(64))
@@ -30,5 +32,7 @@ func Init() *gin.Engine {
 	authorized := router.Group("/admin", gin.BasicAuth(gin.Accounts{os.Getenv("BasicAuthUSER"): os.Getenv("BasicAuthPASSWORD"),}))
 	authorized.GET("/", AdminHandler)
 	router.GET("/", RootHandler)
+	router.GET("/community/:id", CommunityShowHandler)
+	router.POST("/community/:id/message/create", MessageCreateHandler)
 	return router
 }

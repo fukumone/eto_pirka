@@ -1,0 +1,31 @@
+{{define "content"}}
+  <h2>{{.Community.Name}}</h2>
+  <h4>説明：{{.Community.Description}}</h4>
+
+  <h3>メッセージ</h3>
+  <table class="table">
+    <tr>
+      <th>名前</th>
+      <th>本文</th>
+    </tr>
+    {{range .Messages}}
+    <tr>
+      <td>{{.Name}}</td>
+      <td>{{.Body}}</td>
+    </tr>
+    {{end}}
+  </table>
+  <div style="width: 500px;">
+    <form method="post" action="/community/{{.Community.ID}}/message/create" >
+      <div class="form-group">
+        <label for="Name">名前</label>
+        <input type="text" class="form-control" id="Name" placeholder="名前">
+      </div>
+      <div class="form-group">
+        <label for="Body">本文</label>
+        <textarea name="Body" class="form-control" rows="3" placeholder="本文"></textarea>
+      </div>
+      <button type="submit" class="btn btn-default">メッセージを書く</button>
+    </form>
+  </div>
+{{end}}

@@ -1,10 +1,16 @@
 {{define "content"}}
-  <h3>コミュニティ一覧</h3>
-  {{range .Communities}}
-  <table>
+  <h3><i class="fa fa-users" aria-hidden="true"></i>
+コミュニティ一覧</h3>
+  <table class="table">
     <tr>
-      <td>{{.Name}}</td>
+      <th>タイトル</th>
+      <th>説明</th>
     </tr>
+    {{range .Communities}}
+    <tr>
+      <td><a href="/community/{{.ID}}">{{.Name}}</a></td>
+      <td>{{.Description}}</td>
+    </tr>
+    {{end}}
   </table>
-  {{end}}
 {{end}}
