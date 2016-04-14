@@ -1,44 +1,23 @@
-package main
+package routes
 
 import (
-	"fmt"
 	"log"
+	"fmt"
 	"net/http"
 	"crypto/md5"
 	"github.com/gin-gonic/gin"
-	"github.com/stretchr/objx"
 	"github.com/stretchr/gomniauth"
-
-	"github.com/t-fukui/eto_pirka/models"
+	"github.com/stretchr/objx"
 )
 
 import gomniauthcommon "github.com/stretchr/gomniauth/common"
-
-func RootHandler(c *gin.Context) {
-	data := map[string]interface{}{}
-	if authCookie, err := c.Request.Cookie("auth"); err == nil {
-		data["UserData"] = objx.MustFromBase64(authCookie.Value)
-	}
-	Communities := []models.Community{}
-	db.Debug().Find(&Communities)
-	router.LoadHTMLFiles("templates/layout.html", "templates/index.html")
-	c.HTML(http.StatusOK, "layout.html", gin.H{
-		"Communities": Communities,
-		"UserData": data,
-	})
-}
-
-func AdminHandler(c *gin.Context) {
-	router.LoadHTMLFiles("templates/layout.html", "templates/admin/index.html")
-	c.HTML(http.StatusOK, "layout.html", nil)
-}
 
 func LoginHandler(c *gin.Context) {
 	router.LoadHTMLFiles("templates/layout.html", "templates/login.html")
 	c.HTML(http.StatusOK, "layout.html", nil)
 }
 
-func AuthHandler(c *gin.Context) {
+func AuthenticateHandler(c *gin.Context) {
 	provider, err := gomniauth.Provider("facebook")
 	if err != nil {
 		log.Fatalln("Error when trying to get provider", provider, "-", err)
@@ -84,8 +63,8 @@ func CallBackHandler(c *gin.Context) {
 
 	// save some data
 	authCookieValue := objx.New(map[string]interface{}{
-		"userid":     User.uniqueID,
-		"name":       user.Name(),
+		"userid": User.uniqueID,
+		"name":   user.Name(),
 	}).MustBase64()
 
 	http.SetCookie(c.Writer, &http.Cookie{
@@ -99,9 +78,9 @@ func CallBackHandler(c *gin.Context) {
 
 func LogoutHandler(c *gin.Context) {
 	http.SetCookie(c.Writer, &http.Cookie{
-		Name:   "auth",
-		Value:  "",
-		Path:   "/",
+		Name:  "auth",
+		Value: "",
+		Path:  "/",
 	})
 	c.Writer.Header()["Location"] = []string{"/login"}
 	c.Writer.WriteHeader(http.StatusTemporaryRedirect)

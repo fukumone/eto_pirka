@@ -3,12 +3,12 @@ package main
 import (
 	"fmt"
 	"strconv"
-	"github.com/t-fukui/eto_pirka/config"
+	"github.com/t-fukui/eto_pirka/db"
 	"github.com/t-fukui/eto_pirka/models"
 )
 
 func main() {
-	db := config.Database()
+	db := db.InitDB()
 	for i := 0; i < 3; i++ {
 		user := models.User{Name: fmt.Sprintf("ホゲの子" + strconv.Itoa(i+1))}
 		db.Create(&user)

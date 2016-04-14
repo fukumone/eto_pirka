@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/css/main.css">
     <title>Eto Pirka SNS</title>
   </head>
@@ -10,11 +11,9 @@
     <header>
       <h1><a href="/">Eto Pirka SNS</a></h1>
       {{if .UserData}}
-        {{range .UserData}}{{.name}}{{end}} |
+        <i class="fa fa-user" aria-hidden="true"></i>{{range .UserData}}{{.name}}{{end}} |
         <a href="/logout">ログアウト</a>
       {{end}}
-      <p>
-  </p>
     </header>
     <div id="content">
       {{template "content" .}}
