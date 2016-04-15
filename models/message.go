@@ -13,3 +13,7 @@ type Message struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
+
+type MessageForm struct {
+	Message
+}
