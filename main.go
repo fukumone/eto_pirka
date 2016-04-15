@@ -1,6 +1,14 @@
 package main
 
-import "github.com/t-fukui/eto_pirka/routes"
+import (
+	"runtime"
+	"github.com/t-fukui/eto_pirka/routes"
+)
+
+func init() {
+	// Use all CPU cores
+	runtime.GOMAXPROCS(runtime.NumCPU())
+}
 
 func main() {
 	router := routes.Init()

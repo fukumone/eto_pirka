@@ -10,7 +10,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func env_load() {
+func envLoad() {
 	if os.Getenv("ETO_PIRKA_ENV") == "" {
 		os.Setenv("ETO_PIRKA_ENV", "development")
 	}
@@ -22,7 +22,7 @@ func env_load() {
 }
 
 func InitDB() gorm.DB {
-	env_load()
+	envLoad()
 	db, err := gorm.Open("mysql",
 		fmt.Sprintf("%s:@/%s?charset=utf8&parseTime=True&loc=Local",
 			os.Getenv("DB_USER_NAME"),
