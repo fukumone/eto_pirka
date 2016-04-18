@@ -6,9 +6,20 @@ import (
 
 type Community struct {
 	ID               int
-	AdministratorId  int
-	Name             string `sql:"size:255"`
-	Description      string `sql:"size:255"`
+	AdministratorId  string
+	Name             string
+	Description      string
 	CreatedAt time.Time
 	UpdatedAt time.Time
+}
+
+func ValidCommunity(c Community) bool {
+	if c.Name == "" {
+		return false
+	} else if c.AdministratorId == "" {
+		return false
+	} else if c.Description == "" {
+		return false
+	}
+	return true
 }

@@ -13,3 +13,16 @@ type Message struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
+
+func ValidMessage(c Message) bool {
+	if c.UserId == "" {
+		return false
+	} else if c.CommunityId == 0 {
+		return false
+	} else if c.Name == "" {
+		return false
+	} else if c.Body == "" {
+		return false
+	}
+	return true
+}

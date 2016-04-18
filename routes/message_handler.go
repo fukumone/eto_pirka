@@ -8,7 +8,7 @@ import (
 	"github.com/t-fukui/eto_pirka/models"
 )
 
-// TODO:Validation機能追加
+// TODO:エラーメッセージ機能追加
 func MessageCreateHandler(c *gin.Context) {
 	community_id := c.Params.ByName("id")
 	Community := models.Community{}
@@ -24,7 +24,16 @@ func MessageCreateHandler(c *gin.Context) {
 	uesr_id, _ := UserData["userid"].(string)
 	message := models.Message{Name: name, Body: form.Body, CommunityId: CommunityId, UserId: uesr_id}
 
-	url := fmt.Sprintf("/user/%s/community/show/%s", name, c.Params.ByName("id"))
-	dbConnect.Debug().Create(&message)
-	c.Redirect(http.StatusMovedPermanently, url)
+	if models.ValidMessage(message) {
+		url := fmt.Sprintf("/user/%s/community/show/%s", name, c.Params.ByName("id"))
+		dbConnect.Debug().Create(&message)
+		c.Redirect(http.StatusMovedPermanently, url)
+	} else {
+		router.LoadHTMLFiles("templates/layout.html", "templates/main/community/show.html")
+		c.HTML(http.StatusOK, "layout.html", gin.H{
+			"Community": Community,
+			"Messages": Messages,
+			"UserData": UserData,
+		})
+	}
 }

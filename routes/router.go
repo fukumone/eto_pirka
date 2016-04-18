@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"net/http"
 	"os"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/signature"
@@ -32,7 +33,11 @@ func Init() *gin.Engine {
 	authorized := router.Group("/admin", gin.BasicAuth(gin.Accounts{os.Getenv("BasicAuthUSER"): os.Getenv("BasicAuthPASSWORD"),}))
 	authorized.GET("/", AdminHandler)
 
-	userRouter := router.Group("user/:name")
+	userRouter := router.Group("user/:name", func(c *gin.Context){
+		if cookie, err := c.Request.Cookie("auth"); err == http.ErrNoCookie || cookie.Value == "" {
+			c.Abort()
+		}
+	})
 
 	// Root Path
 	userRouter.GET("/", RootHandler)

@@ -30,12 +30,20 @@ func CommunityNewHandler(c *gin.Context) {
 	})
 }
 
-// TODO:Validation機能追加
+// TODO:エラーメッセージ機能追加
 func CommunityCreateHandler(c *gin.Context) {
 	var form models.Community
 	c.Bind(&form)
-	community := models.Community{Name: form.Name, Description: form.Description}
-	dbConnect.Debug().Create(&community)
-	url := fmt.Sprintf("/user/%s", UserData["name"])
-	c.Redirect(http.StatusMovedPermanently, url)
+	userId, _ := UserData["name"].(string)
+	community := models.Community{Name: form.Name, Description: form.Description, AdministratorId: userId}
+	if models.ValidCommunity(community) {
+		dbConnect.Debug().Create(&community)
+		url := fmt.Sprintf("/user/%s", UserData["name"])
+		c.Redirect(http.StatusMovedPermanently, url)
+	} else {
+		router.LoadHTMLFiles("templates/layout.html", "templates/main/community/new.html")
+		c.HTML(http.StatusOK, "layout.html", gin.H{
+			"UserData": UserData,
+		})
+	}
 }
