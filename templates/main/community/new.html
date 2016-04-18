@@ -1,9 +1,9 @@
 {{define "content"}}
   <div style="width: 500px;">
-    <form method="post" action="/community/create" >
+    <form method="post" action="/user/{{.UserData.name}}/community/create" >
       <div class="form-group">
-        <label for="Name">名前</label>
-        <input type="text" class="form-control" name="Name" placeholder="名前">
+        <label for="Name">コミュニティ名</label>
+        <input type="text" class="form-control" name="Name" placeholder="コミュニティ名">
       </div>
       <div class="form-group">
         <label for="Description">説明</label>
@@ -13,5 +13,5 @@
     </form>
   </div>
   <br>
-  <p><a href="/" class="btn btn-primary">コミュニティ一覧</a></p>
+  <p><a href="/user/{{.UserData.name}}" class="btn btn-primary">コミュニティ一覧</a></p>
 {{end}}

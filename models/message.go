@@ -6,10 +6,10 @@ import (
 
 type Message struct {
 	ID        int
-	UserId    int
-	CommunityId int `binding:"required,CommunityId"`
-	Name      string `binding:"required,name"`
-	Body      string `binding:"required,body"`
+	UserId    string
+	CommunityId int
+	Name      string
+	Body      string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

@@ -71,8 +71,9 @@ func CallBackHandler(c *gin.Context) {
 		Name:  "auth",
 		Value: authCookieValue,
 		Path:  "/"})
-
-	c.Writer.Header()["Location"] = []string{"/"}
+	name, _ := UserData["name"].(string)
+	url := fmt.Sprintf("/user/%s", name)
+	c.Writer.Header()["Location"] = []string{url}
 	c.Writer.WriteHeader(http.StatusTemporaryRedirect)
 }
 

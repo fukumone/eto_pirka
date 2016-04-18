@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 	"github.com/gin-gonic/gin"
 )
@@ -13,8 +14,13 @@ func FilterHandler(c *gin.Context) {
 	} else if err != nil {
 		panic(err.Error())
 	} else {
-		// success
-		c.Writer.Header()["Location"] = []string{"/"}
-		c.Writer.WriteHeader(http.StatusTemporaryRedirect)
+		if UserData["name"] == nil {
+					url := fmt.Sprintf("/user/%s", UserData["name"])
+			c.Writer.Header()["Location"] = []string{url}
+			c.Writer.WriteHeader(http.StatusTemporaryRedirect)
+		} else {
+			c.Writer.Header()["Location"] = []string{"/login"}
+			c.Writer.WriteHeader(http.StatusTemporaryRedirect)
+		}
 	}
 }

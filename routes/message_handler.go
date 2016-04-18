@@ -20,9 +20,11 @@ func MessageCreateHandler(c *gin.Context) {
 	var form models.Message
 	c.Bind(&form)
 	CommunityId, _ := strconv.Atoi(c.Params.ByName("id"))
-	message := models.Message{Name: form.Name, Body: form.Body, CommunityId: CommunityId}
+	name, _ := UserData["name"].(string)
+	uesr_id, _ := UserData["userid"].(string)
+	message := models.Message{Name: name, Body: form.Body, CommunityId: CommunityId, UserId: uesr_id}
 
-	url := fmt.Sprintf("/community/%s", c.Params.ByName("id"))
+	url := fmt.Sprintf("/user/%s/community/show/%s", name, c.Params.ByName("id"))
 	dbConnect.Debug().Create(&message)
 	c.Redirect(http.StatusMovedPermanently, url)
 }

@@ -9,9 +9,9 @@
   </head>
   <body>
     <header>
-      <h1><a href="/">Eto Pirka SNS</a></h1>
+      <h1><a href="/user/{{.UserData.name}}">Eto Pirka SNS</a></h1>
       {{if .UserData}}
-        <i class="fa fa-user" aria-hidden="true"></i>{{range .UserData}}{{.name}}{{end}} |
+        <i class="fa fa-user" aria-hidden="true"></i>{{.UserData.name}} |
         <a href="/logout">ログアウト</a>
       {{end}}
     </header>

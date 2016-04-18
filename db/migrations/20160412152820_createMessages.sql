@@ -6,7 +6,7 @@ CREATE TABLE messages
   id int NOT NULL auto_increment COMMENT 'ID',
   name varchar(128) NOT NULL COMMENT '名前',
   body varchar(128) NOT NULL COMMENT '本文',
-  user_id int,
+  user_id varchar(128),
   community_id int,
   created_at timestamp not null default current_timestamp,
   updated_at timestamp not null default current_timestamp on update current_timestamp,

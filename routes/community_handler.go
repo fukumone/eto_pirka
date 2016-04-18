@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 	"github.com/gin-gonic/gin"
 	"github.com/t-fukui/eto_pirka/models"
@@ -24,7 +25,9 @@ func CommunityShowHandler(c *gin.Context) {
 
 func CommunityNewHandler(c *gin.Context) {
 	router.LoadHTMLFiles("templates/layout.html", "templates/main/community/new.html")
-	c.HTML(http.StatusOK, "layout.html", nil)
+	c.HTML(http.StatusOK, "layout.html", gin.H{
+		"UserData": UserData,
+	})
 }
 
 // TODO:Validation機能追加
@@ -33,5 +36,6 @@ func CommunityCreateHandler(c *gin.Context) {
 	c.Bind(&form)
 	community := models.Community{Name: form.Name, Description: form.Description}
 	dbConnect.Debug().Create(&community)
-	c.Redirect(http.StatusMovedPermanently, "/")
+	url := fmt.Sprintf("/user/%s", UserData["name"])
+	c.Redirect(http.StatusMovedPermanently, url)
 }

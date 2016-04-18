@@ -31,14 +31,18 @@ func Init() *gin.Engine {
 	router.GET("/auth/callback/facebook", CallBackHandler)
 	authorized := router.Group("/admin", gin.BasicAuth(gin.Accounts{os.Getenv("BasicAuthUSER"): os.Getenv("BasicAuthPASSWORD"),}))
 	authorized.GET("/", AdminHandler)
-	router.GET("/", RootHandler)
 
-	community := router.Group("/community")
+	userRouter := router.Group("user/:name")
+
+	// Root Path
+	userRouter.GET("/", RootHandler)
+
+	community := userRouter.Group("/community")
 	{
 		community.GET("/show/:id", CommunityShowHandler)
 		community.GET("/new", CommunityNewHandler)
 		community.POST("/create", CommunityCreateHandler)
-		community.POST("/community/:id/message/create", MessageCreateHandler)
+		community.POST("/show/:id/message/create", MessageCreateHandler)
 	}
 
 	return router

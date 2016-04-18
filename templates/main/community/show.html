@@ -1,29 +1,32 @@
 {{define "content"}}
   <h2>{{.Community.Name}}</h2>
   <h4>説明：{{.Community.Description}}</h4>
-
-  <h3>メッセージ</h3>
-  <table class="table">
-    <tr>
-      <th>名前</th>
-      <th>本文</th>
-    </tr>
-    {{range .Messages}}
-    <tr>
-      <td>{{.Name}}</td>
-      <td>{{.Body}}</td>
-    </tr>
-    {{end}}
-  </table>
+  {{if .Messages}}
+    <h3>メッセージ</h3>
+    <table class="table" style="width: 500px;">
+      <tr>
+        <th>名前</th>
+        <th>本文</th>
+      </tr>
+      {{range .Messages}}
+      <tr>
+        <td>{{.Name}}</td>
+        <td>{{.Body}}</td>
+      </tr>
+      {{end}}
+    </table>
+  {{else}}
+    <h3>メッセージはありません</h3>
+  {{end}}
   <div style="width: 500px;">
-    <form method="post" action="/community/{{.Community.ID}}/message/create" >
+    <form method="post" action="/user/{{.UserData.name}}/community/show/{{.Community.ID}}/message/create" >
       <div class="form-group">
-        <label for="name">名前</label>
-        <input type="text" class="form-control" name="name" placeholder="名前">
+        <label for="Name">名前</label>
+        <h4>{{.UserData.name}}</h4>
       </div>
       <div class="form-group">
-        <label for="body">本文</label>
-        <textarea name="body" class="form-control" rows="3" placeholder="本文"></textarea>
+        <label for="Body">本文</label>
+        <textarea name="Body" class="form-control" rows="3" placeholder="本文"></textarea>
       </div>
       <button type="submit" class="btn btn-default">メッセージを書く</button>
     </form>
