@@ -32,7 +32,14 @@ func Init() *gin.Engine {
 	authorized := router.Group("/admin", gin.BasicAuth(gin.Accounts{os.Getenv("BasicAuthUSER"): os.Getenv("BasicAuthPASSWORD"),}))
 	authorized.GET("/", AdminHandler)
 	router.GET("/", RootHandler)
-	router.GET("/community/:id", CommunityShowHandler)
-	router.POST("/community/:id/message/create", MessageCreateHandler)
+
+	community := router.Group("/community")
+	{
+		community.GET("/show/:id", CommunityShowHandler)
+		community.GET("/new", CommunityNewHandler)
+		community.POST("/create", CommunityCreateHandler)
+		community.POST("/community/:id/message/create", MessageCreateHandler)
+	}
+
 	return router
 }

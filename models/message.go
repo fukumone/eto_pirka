@@ -7,13 +7,9 @@ import (
 type Message struct {
 	ID        int
 	UserId    int
-	CommunityId int
-	Name      string `sql:"size:255"`
-	Body      string `sql:"size:255"`
+	CommunityId int `binding:"required,CommunityId"`
+	Name      string `binding:"required,name"`
+	Body      string `binding:"required,body"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
-}
-
-type MessageForm struct {
-	Message
 }

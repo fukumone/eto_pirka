@@ -1,0 +1,17 @@
+{{define "content"}}
+  <div style="width: 500px;">
+    <form method="post" action="/community/create" >
+      <div class="form-group">
+        <label for="Name">名前</label>
+        <input type="text" class="form-control" name="Name" placeholder="名前">
+      </div>
+      <div class="form-group">
+        <label for="Description">説明</label>
+        <textarea name="Description" class="form-control" rows="3" placeholder="説明"></textarea>
+      </div>
+      <button type="submit" class="btn btn-default">作成</button>
+    </form>
+  </div>
+  <br>
+  <p><a href="/" class="btn btn-primary">コミュニティ一覧</a></p>
+{{end}}

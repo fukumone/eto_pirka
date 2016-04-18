@@ -1,16 +1,21 @@
 {{define "content"}}
+  <a href="/community/new" class="btn btn-primary">コミュニティ新規作成</a>
   <h3><i class="fa fa-users" aria-hidden="true"></i>
 コミュニティ一覧</h3>
-  <table class="table">
-    <tr>
-      <th>タイトル</th>
-      <th>説明</th>
-    </tr>
-    {{range .Communities}}
-    <tr>
-      <td><a href="/community/{{.ID}}">{{.Name}}</a></td>
-      <td>{{.Description}}</td>
-    </tr>
-    {{end}}
-  </table>
+  {{if .Communities}}
+    <table class="table">
+      <tr>
+        <th>タイトル</th>
+        <th>説明</th>
+      </tr>
+      {{range .Communities}}
+      <tr>
+        <td><a href="/community/show/{{.ID}}">{{.Name}}</a></td>
+        <td>{{.Description}}</td>
+      </tr>
+      {{end}}
+    </table>
+  {{else}}
+    <h3>コミュニティはありません</h3>
+  {{end}}
 {{end}}

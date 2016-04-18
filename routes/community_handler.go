@@ -21,3 +21,17 @@ func CommunityShowHandler(c *gin.Context) {
 		"UserData": UserData,
 	})
 }
+
+func CommunityNewHandler(c *gin.Context) {
+	router.LoadHTMLFiles("templates/layout.html", "templates/main/community/new.html")
+	c.HTML(http.StatusOK, "layout.html", nil)
+}
+
+// TODO:Validation機能追加
+func CommunityCreateHandler(c *gin.Context) {
+	var form models.Community
+	c.Bind(&form)
+	community := models.Community{Name: form.Name, Description: form.Description}
+	dbConnect.Debug().Create(&community)
+	c.Redirect(http.StatusMovedPermanently, "/")
+}
