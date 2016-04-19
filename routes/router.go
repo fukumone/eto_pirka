@@ -48,6 +48,7 @@ func Init() *gin.Engine {
 		community.GET("/new", CommunityNewHandler)
 		community.POST("/create", CommunityCreateHandler)
 		community.POST("/show/:id/message/create", MessageCreateHandler)
+		community.POST("/show/:id/message/delete", MessageDeleteHandler)
 	}
 
 	return router

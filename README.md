@@ -1,4 +1,5 @@
 # EtoPirka
+・Go言語で簡潔なSNSアプリケーション
 
 ### Create Database
 

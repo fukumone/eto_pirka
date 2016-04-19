@@ -30,11 +30,12 @@ func CommunityNewHandler(c *gin.Context) {
 	})
 }
 
-// TODO:エラーメッセージ機能追加
+// TODO:エラーメッセージ追加
+// TODO:Flashメッセージ追加
 func CommunityCreateHandler(c *gin.Context) {
 	var form models.Community
 	c.Bind(&form)
-	userId, _ := UserData["name"].(string)
+	userId, _ := UserData["userid"].(string)
 	community := models.Community{Name: form.Name, Description: form.Description, AdministratorId: userId}
 	if models.ValidCommunity(community) {
 		dbConnect.Debug().Create(&community)

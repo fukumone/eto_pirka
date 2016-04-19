@@ -23,3 +23,7 @@ func ValidCommunity(c Community) bool {
 	}
 	return true
 }
+
+func CommnunityValidAdmin(c Community, AdministratorId string) bool {
+	return c.AdministratorId == AdministratorId
+}

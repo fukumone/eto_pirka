@@ -7,11 +7,24 @@
       <tr>
         <th>名前</th>
         <th>本文</th>
+        <th>アクション</th>
       </tr>
-      {{range .Messages}}
+      {{$cookiesUserId := .UserData.userid}}
+      {{$cookiesUserName := .UserData.name}}
+      {{$communityAdministratorId := .Community.AdministratorId}}
+      {{$communityId := .Community.ID}}
+      {{range $message := .Messages}}
       <tr>
-        <td>{{.Name}}</td>
-        <td>{{.Body}}</td>
+        <td>{{$message.Name}}</td>
+        <td>{{$message.Body}}</td>
+        {{if eq $cookiesUserId $communityAdministratorId}}
+          <form method="post" action="/user/{{$cookiesUserName}}/community/show/{{$communityId}}/message/delete" >
+            <input type="hidden" name="MessageId" value={{$message.ID}}>
+            <td type="submit"><button type="submit" class="btn btn-default">削除</button></td>
+          </form>
+        {{else}}
+          <td>なし</td>
+        {{end}}
       </tr>
       {{end}}
     </table>
