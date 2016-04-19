@@ -30,8 +30,7 @@ func CommunityNewHandler(c *gin.Context) {
 	})
 }
 
-// TODO:エラーメッセージ追加
-// TODO:Flashメッセージ追加
+// TODO:Flash Successメッセージ追加
 func CommunityCreateHandler(c *gin.Context) {
 	var form models.Community
 	c.Bind(&form)
@@ -42,9 +41,11 @@ func CommunityCreateHandler(c *gin.Context) {
 		url := fmt.Sprintf("/user/%s", UserData["name"])
 		c.Redirect(http.StatusMovedPermanently, url)
 	} else {
+		flashErrorMessage := FlashErrorMessage(c, store, "データを作成できませんでした")
 		router.LoadHTMLFiles("templates/layout.html", "templates/main/community/new.html")
 		c.HTML(http.StatusOK, "layout.html", gin.H{
 			"UserData": UserData,
+			"FlashErrorMessage": flashErrorMessage,
 		})
 	}
 }

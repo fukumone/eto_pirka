@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"os"
 	"github.com/gin-gonic/gin"
+	"github.com/gorilla/sessions"
 	"github.com/stretchr/signature"
 	"github.com/stretchr/gomniauth"
 	"github.com/stretchr/gomniauth/providers/facebook"
@@ -15,6 +16,7 @@ var (
 	router = gin.Default()
 	dbConnect = db.InitDB()
 	UserData = map[string]interface{}{}
+	store = sessions.NewCookieStore([]byte("flash-message"))
 )
 
 func Init() *gin.Engine {

@@ -14,8 +14,8 @@ func FilterHandler(c *gin.Context) {
 	} else if err != nil {
 		panic(err.Error())
 	} else {
-		if UserData["name"] == nil {
-					url := fmt.Sprintf("/user/%s", UserData["name"])
+		if UserData["name"] != "" {
+			url := fmt.Sprintf("/user/%s", UserData["name"])
 			c.Writer.Header()["Location"] = []string{url}
 			c.Writer.WriteHeader(http.StatusTemporaryRedirect)
 		} else {

@@ -8,8 +8,7 @@ import (
 	"github.com/t-fukui/eto_pirka/models"
 )
 
-// TODO:エラーメッセージ追加
-// TODO:Flashメッセージ追加
+// TODO:Flash Successメッセージ追加
 func MessageCreateHandler(c *gin.Context) {
 	community_id := c.Params.ByName("id")
 	Community := models.Community{}
@@ -30,11 +29,14 @@ func MessageCreateHandler(c *gin.Context) {
 		dbConnect.Debug().Create(&message)
 		c.Redirect(http.StatusMovedPermanently, url)
 	} else {
+		flashErrorMessage := FlashErrorMessage(c, store, "データを作成できませんでした")
+
 		router.LoadHTMLFiles("templates/layout.html", "templates/main/community/show.html")
 		c.HTML(http.StatusOK, "layout.html", gin.H{
 			"Community": Community,
 			"Messages": Messages,
 			"UserData": UserData,
+			"FlashErrorMessage": flashErrorMessage,
 		})
 	}
 }
@@ -43,7 +45,7 @@ type DeleteForm struct {
 	MessageId int
 }
 
-// TODO:Flashメッセージ追加
+// TODO:Flash Successメッセージ追加
 func MessageDeleteHandler(c *gin.Context) {
 	community_id := c.Params.ByName("id")
 	Community := models.Community{}
@@ -65,11 +67,14 @@ func MessageDeleteHandler(c *gin.Context) {
 		dbConnect.Debug().Delete(&Message)
 		c.Redirect(http.StatusMovedPermanently, url)
 	} else {
+		flashErrorMessage := FlashErrorMessage(c, store, "管理者権限がないので削除できません")
+
 		router.LoadHTMLFiles("templates/layout.html", "templates/main/community/show.html")
 		c.HTML(http.StatusOK, "layout.html", gin.H{
 			"Community": Community,
 			"Messages": Messages,
 			"UserData": UserData,
+			"FlashErrorDeleteMessage": flashErrorMessage,
 		})
 	}
 }

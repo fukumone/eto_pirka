@@ -18,3 +18,8 @@ footer {
   bottom: 0px;
   margin: auto;
 }
+
+.error-message {
+  color: red;
+  font-size: 20px;
+}

@@ -1,5 +1,8 @@
 {{define "content"}}
   <div style="width: 500px;">
+    {{if .FlashErrorMessage}}
+      <p class="error-message">*{{.FlashErrorMessage}}</p>
+    {{end}}
     <form method="post" action="/user/{{.UserData.name}}/community/create" >
       <div class="form-group">
         <label for="Name">コミュニティ名</label>

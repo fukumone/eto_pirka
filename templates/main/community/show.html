@@ -2,6 +2,9 @@
   <h2>{{.Community.Name}}</h2>
   <h4>説明：{{.Community.Description}}</h4>
   {{if .Messages}}
+    {{if .FlashErrorDeleteMessage}}
+      <p class="error-message">*{{.FlashErrorDeleteMessage}}</p>
+    {{end}}
     <h3>メッセージ</h3>
     <table class="table" style="width: 500px;">
       <tr>
@@ -20,7 +23,7 @@
         {{if eq $cookiesUserId $communityAdministratorId}}
           <form method="post" action="/user/{{$cookiesUserName}}/community/show/{{$communityId}}/message/delete" >
             <input type="hidden" name="MessageId" value={{$message.ID}}>
-            <td type="submit"><button type="submit" class="btn btn-default">削除</button></td>
+            <td type="submit"><button type="submit" class="btn btn-default confirmation">削除</button></td>
           </form>
         {{else}}
           <td>なし</td>
@@ -32,6 +35,9 @@
     <h3>メッセージはありません</h3>
   {{end}}
   <div style="width: 500px;">
+    {{if .FlashErrorMessage}}
+      <p class="error-message">*{{.FlashErrorMessage}}</p>
+    {{end}}
     <form method="post" action="/user/{{.UserData.name}}/community/show/{{.Community.ID}}/message/create" >
       <div class="form-group">
         <label for="Name">名前</label>
