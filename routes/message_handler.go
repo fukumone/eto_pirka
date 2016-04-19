@@ -8,11 +8,6 @@ import (
 	"github.com/t-fukui/eto_pirka/models"
 )
 
-type MessageForm struct {
-	models.Message
-	Token string
-}
-
 // TODO:Flash Successメッセージ追加
 func MessageCreateHandler(c *gin.Context) {
 	community_id := c.Params.ByName("id")
@@ -21,21 +16,23 @@ func MessageCreateHandler(c *gin.Context) {
 
 	Messages := []models.Message{}
 	dbConnect.Debug().Where("community_id = ?", community_id).Find(&Messages)
-
-	var form MessageForm
+	var form models.MessageForm
 	c.Bind(&form)
+
 	CommunityId, _ := strconv.Atoi(c.Params.ByName("id"))
 	name, _ := UserData["name"].(string)
 	user_id, _ := UserData["userid"].(string)
 	message := models.Message{Name: name, Body: form.Body, CommunityId: CommunityId, UserId: user_id}
 
-	if models.ValidMessage(message) && form.Token == token.Id {
+	form.Message = message
+
+	if models.ValidMessage(&form) && form.Token == token.Id {
+
 		url := fmt.Sprintf("/user/%s/community/show/%s", name, c.Params.ByName("id"))
 		dbConnect.Debug().Create(&message)
 		c.Redirect(http.StatusMovedPermanently, url)
 	} else {
 		flashErrorMessage := FlashErrorMessage(c, store, "データを作成できませんでした")
-
 		router.LoadHTMLFiles("templates/layout.html", "templates/main/community/show.html")
 		c.HTML(http.StatusOK, "layout.html", gin.H{
 			"Community": Community,
@@ -43,6 +40,7 @@ func MessageCreateHandler(c *gin.Context) {
 			"UserData": UserData,
 			"FlashErrorMessage": flashErrorMessage,
 			"Token": token.Id,
+			"Errors": form.Errors,
 		})
 	}
 }

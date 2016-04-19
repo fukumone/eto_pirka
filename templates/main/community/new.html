@@ -1,7 +1,14 @@
 {{define "content"}}
   <div style="width: 500px;">
     {{if .FlashErrorMessage}}
-      <p class="error-message">*{{.FlashErrorMessage}}</p>
+      <div class="error-message">
+        <p>※{{.FlashErrorMessage}}</p>
+        {{range .Errors}}
+        <ul>
+          <li>{{.}}</li>
+        </ul>
+        {{end}}
+      </div>
     {{end}}
     <form method="post" action="/user/{{.UserData.name}}/community/create" >
       <div class="form-group">

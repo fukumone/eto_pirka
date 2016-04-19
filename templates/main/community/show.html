@@ -1,9 +1,10 @@
 {{define "content"}}
   <h2>{{.Community.Name}}</h2>
+  {{if eq .Community.AdministratorId .UserData.userid}}<span style="color: blue;">※管理者</span>{{end}}
   <h4>説明：{{.Community.Description}}</h4>
   {{if .Messages}}
     {{if .FlashErrorDeleteMessage}}
-      <p class="error-message">*{{.FlashErrorDeleteMessage}}</p>
+      <p class="error-message">※{{.FlashErrorDeleteMessage}}</p>
     {{end}}
     <h3>メッセージ</h3>
     <table class="table" style="width: 500px;">
@@ -36,7 +37,14 @@
   {{end}}
   <div style="width: 500px;">
     {{if .FlashErrorMessage}}
-      <p class="error-message">*{{.FlashErrorMessage}}</p>
+      <div class="error-message">
+        <p>※{{.FlashErrorMessage}}</p>
+        {{range .Errors}}
+        <ul>
+          <li>{{.}}</li>
+        </ul>
+        {{end}}
+      </div>
     {{end}}
     <form method="post" action="/user/{{.UserData.name}}/community/show/{{.Community.ID}}/message/create" >
       <div class="form-group">

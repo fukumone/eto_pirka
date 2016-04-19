@@ -34,19 +34,16 @@ func CommunityNewHandler(c *gin.Context) {
 	})
 }
 
-type CommunityForm struct {
-	models.Community
-	Token string
-}
-
 // TODO:Flash Successメッセージ追加
 func CommunityCreateHandler(c *gin.Context) {
-	var form CommunityForm
+	var form models.CommunityForm
 	c.Bind(&form)
 	userId, _ := UserData["userid"].(string)
 	community := models.Community{Name: form.Name, Description: form.Description, AdministratorId: userId}
 
-	if models.ValidCommunity(community) && form.Token == token.Id  {
+	form.Community = community
+
+	if models.ValidCommunity(&form) && form.Token == token.Id  {
 		dbConnect.Debug().Create(&community)
 		url := fmt.Sprintf("/user/%s", UserData["name"])
 		c.Redirect(http.StatusMovedPermanently, url)
@@ -57,6 +54,7 @@ func CommunityCreateHandler(c *gin.Context) {
 			"UserData": UserData,
 			"Token": token.Id,
 			"FlashErrorMessage": flashErrorMessage,
+			"Errors": form.Errors,
 		})
 	}
 }

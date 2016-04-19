@@ -13,12 +13,23 @@ type Community struct {
 	UpdatedAt time.Time
 }
 
-func ValidCommunity(c Community) bool {
-	if c.Name == "" {
-		return false
-	} else if c.AdministratorId == "" {
-		return false
-	} else if c.Description == "" {
+type CommunityForm struct {
+	Community
+	Token string
+	Errors []string
+}
+
+func ValidCommunity(c *CommunityForm) bool {
+	if c.Community.Name == "" {
+		c.Errors = append(c.Errors, "コミュニティ名を入力してください")
+	}
+	if c.Community.Description == "" {
+		c.Errors = append(c.Errors, "説明を入力してください")
+	}
+	if c.Community.AdministratorId == "" {
+		c.Errors = append(c.Errors, "管理者IDを入力してください")
+	}
+	if len(c.Errors) > 0 {
 		return false
 	}
 	return true
