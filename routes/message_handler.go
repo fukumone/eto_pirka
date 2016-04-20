@@ -8,6 +8,11 @@ import (
 	"github.com/t-fukui/eto_pirka/models"
 )
 
+type MessageForm struct {
+	models.Message
+	Token string
+}
+
 // TODO:Flash Successメッセージ追加
 func MessageCreateHandler(c *gin.Context) {
 	community_id := c.Params.ByName("id")
@@ -17,14 +22,14 @@ func MessageCreateHandler(c *gin.Context) {
 	Messages := []models.Message{}
 	dbConnect.Debug().Where("community_id = ?", community_id).Find(&Messages)
 
-	var form models.Message
+	var form MessageForm
 	c.Bind(&form)
 	CommunityId, _ := strconv.Atoi(c.Params.ByName("id"))
 	name, _ := UserData["name"].(string)
 	user_id, _ := UserData["userid"].(string)
 	message := models.Message{Name: name, Body: form.Body, CommunityId: CommunityId, UserId: user_id}
 
-	if models.ValidMessage(message) {
+	if models.ValidMessage(message) && form.Token == token.Id {
 		url := fmt.Sprintf("/user/%s/community/show/%s", name, c.Params.ByName("id"))
 		dbConnect.Debug().Create(&message)
 		c.Redirect(http.StatusMovedPermanently, url)
@@ -37,6 +42,7 @@ func MessageCreateHandler(c *gin.Context) {
 			"Messages": Messages,
 			"UserData": UserData,
 			"FlashErrorMessage": flashErrorMessage,
+			"Token": token.Id,
 		})
 	}
 }
@@ -47,6 +53,7 @@ type DeleteForm struct {
 
 // TODO:Flash Successメッセージ追加
 func MessageDeleteHandler(c *gin.Context) {
+	token.CreateToken()
 	community_id := c.Params.ByName("id")
 	Community := models.Community{}
 	dbConnect.Debug().First(&Community, community_id)
@@ -74,6 +81,7 @@ func MessageDeleteHandler(c *gin.Context) {
 			"Community": Community,
 			"Messages": Messages,
 			"UserData": UserData,
+			"Token": token.Id,
 			"FlashErrorDeleteMessage": flashErrorMessage,
 		})
 	}

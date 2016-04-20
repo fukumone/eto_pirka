@@ -1,6 +1,12 @@
 # EtoPirka
 ・Go言語で簡潔なSNSアプリケーション
 
+### Install
+
+```
+go get github.com/t-fukui/eto_pirka
+```
+
 ### Create Database
 
 ```
@@ -25,5 +31,5 @@ $ goose up
 ### Server Run
 
 ```
-$ go run main.go
+$ go build -o ./eto_pirka && ./eto_pirka
 ```
