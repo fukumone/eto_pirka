@@ -1,16 +1,27 @@
 package routes
 
 import (
+	"os"
 	"log"
 	"fmt"
 	"net/http"
 	"crypto/md5"
 	"github.com/gin-gonic/gin"
+	"github.com/stretchr/signature"
 	"github.com/stretchr/gomniauth"
+	"github.com/stretchr/gomniauth/providers/facebook"
+
 	"github.com/stretchr/objx"
 )
 
 import gomniauthcommon "github.com/stretchr/gomniauth/common"
+
+func init() {
+	gomniauth.SetSecurityKey(signature.RandomKey(64))
+	gomniauth.WithProviders(
+		facebook.New(os.Getenv("FB_CLIENT_ID"), os.Getenv("FB_SECRET_KEY"), os.Getenv("FB_HOST")),
+	)
+}
 
 func LoginHandler(c *gin.Context) {
 	router.LoadHTMLFiles("templates/layout.html", "templates/login.html")

@@ -7,6 +7,7 @@ import (
 	"github.com/t-fukui/eto_pirka/models"
 )
 
+// TODO paginationを実装する(Message一覧)
 func CommunityShowHandler(c *gin.Context) {
 	token.CreateToken()
 	community_id := c.Params.ByName("id")
@@ -43,7 +44,7 @@ func CommunityCreateHandler(c *gin.Context) {
 
 	form.Community = community
 
-	if models.ValidCommunity(&form) && form.Token == token.Id  {
+	if models.ValidCommunity(&form, token.Id) {
 		dbConnect.Debug().Create(&community)
 		url := fmt.Sprintf("/user/%s", UserData["name"])
 		c.Redirect(http.StatusMovedPermanently, url)

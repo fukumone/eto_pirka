@@ -19,7 +19,7 @@ type CommunityForm struct {
 	Errors []string
 }
 
-func ValidCommunity(c *CommunityForm) bool {
+func ValidCommunity(c *CommunityForm, token string) bool {
 	if c.Community.Name == "" {
 		c.Errors = append(c.Errors, "コミュニティ名を入力してください")
 	}
@@ -29,6 +29,10 @@ func ValidCommunity(c *CommunityForm) bool {
 	if c.Community.AdministratorId == "" {
 		c.Errors = append(c.Errors, "管理者IDを入力してください")
 	}
+	if c.Token != token || c.Token == "" {
+		c.Errors = append(c.Errors, "トークンが不正です")
+	}
+
 	if len(c.Errors) > 0 {
 		return false
 	}

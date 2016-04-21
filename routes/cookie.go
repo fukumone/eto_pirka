@@ -4,7 +4,6 @@ import (
 	"strings"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/objx"
-	"github.com/gorilla/sessions"
 )
 
 func CookieSetup(c *gin.Context) {
@@ -17,12 +16,4 @@ func CookieSetup(c *gin.Context) {
 			UserData["name"] = name
 		}
 	}
-}
-
-func FlashErrorMessage(c *gin.Context, s *sessions.CookieStore, message string) string {
-	session, _ := s.Get(c.Request, "flash-message")
-
-	session.AddFlash(message)
-	flash := session.Flashes()
-	return flash[0].(string)
 }

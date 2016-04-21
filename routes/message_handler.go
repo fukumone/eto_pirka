@@ -26,7 +26,7 @@ func MessageCreateHandler(c *gin.Context) {
 
 	form.Message = message
 
-	if models.ValidMessage(&form) && form.Token == token.Id {
+	if models.ValidMessage(&form, token.Id) {
 
 		url := fmt.Sprintf("/user/%s/community/show/%s", name, c.Params.ByName("id"))
 		dbConnect.Debug().Create(&message)
