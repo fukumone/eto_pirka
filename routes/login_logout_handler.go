@@ -24,7 +24,7 @@ func init() {
 }
 
 func LoginHandler(c *gin.Context) {
-	router.LoadHTMLFiles("templates/layout.html", "templates/login.html")
+	router.LoadHTMLFiles("templates/main/layout.html", "templates/main/login.html")
 	c.HTML(http.StatusOK, "layout.html", nil)
 }
 

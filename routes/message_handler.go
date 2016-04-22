@@ -33,7 +33,7 @@ func MessageCreateHandler(c *gin.Context) {
 		c.Redirect(http.StatusMovedPermanently, url)
 	} else {
 		flashErrorMessage := FlashErrorMessage(c, store, "データを作成できませんでした")
-		router.LoadHTMLFiles("templates/layout.html", "templates/main/community/show.html")
+		router.LoadHTMLFiles("templates/main/layout.html", "templates/main/community/show.html")
 		c.HTML(http.StatusOK, "layout.html", gin.H{
 			"Community": Community,
 			"Messages": Messages,
@@ -74,7 +74,7 @@ func MessageDeleteHandler(c *gin.Context) {
 	} else {
 		flashErrorMessage := FlashErrorMessage(c, store, "管理者権限がないので削除できません")
 
-		router.LoadHTMLFiles("templates/layout.html", "templates/main/community/show.html")
+		router.LoadHTMLFiles("templates/main/layout.html", "templates/main/community/show.html")
 		c.HTML(http.StatusOK, "layout.html", gin.H{
 			"Community": Community,
 			"Messages": Messages,

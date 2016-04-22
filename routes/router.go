@@ -22,6 +22,7 @@ func Init() *gin.Engine {
 	router.Static("/assets", "./assets")
 
 	// Admin(管理者の領域)
+	// TODO コミュニティ、メッセージを強制削除機能追加
 	authorized := router.Group("/admin", gin.BasicAuth(gin.Accounts{os.Getenv("BasicAuthUSER"): os.Getenv("BasicAuthPASSWORD"),}))
 	authorized.GET("/", AdminHandler)
 

@@ -10,7 +10,7 @@ import (
 func RootHandler(c *gin.Context) {
 	Communities := []models.Community{}
 	dbConnect.Debug().Find(&Communities)
-	router.LoadHTMLFiles("templates/layout.html", "templates/index.html")
+	router.LoadHTMLFiles("templates/main/layout.html", "templates/main/index.html")
 	c.HTML(http.StatusOK, "layout.html", gin.H{
 		"Communities": Communities,
 		"UserData":    UserData,

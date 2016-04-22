@@ -6,6 +6,6 @@ import (
 )
 
 func AdminHandler(c *gin.Context) {
-	router.LoadHTMLFiles("templates/layout.html", "templates/admin/index.html")
+	router.LoadHTMLFiles("templates/main/layout.html", "templates/admin/index.html")
 	c.HTML(http.StatusOK, "layout.html", nil)
 }

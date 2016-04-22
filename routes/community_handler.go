@@ -17,7 +17,7 @@ func CommunityShowHandler(c *gin.Context) {
 	Messages := []models.Message{}
 	dbConnect.Debug().Where("community_id = ?", community_id).Find(&Messages)
 
-	router.LoadHTMLFiles("templates/layout.html", "templates/main/community/show.html")
+	router.LoadHTMLFiles("templates/main/layout.html", "templates/main/community/show.html")
 	c.HTML(http.StatusOK, "layout.html", gin.H{
 		"Community": Community,
 		"Messages": Messages,
@@ -28,7 +28,7 @@ func CommunityShowHandler(c *gin.Context) {
 
 func CommunityNewHandler(c *gin.Context) {
 	token.CreateToken()
-	router.LoadHTMLFiles("templates/layout.html", "templates/main/community/new.html")
+	router.LoadHTMLFiles("templates/main/layout.html", "templates/main/community/new.html")
 	c.HTML(http.StatusOK, "layout.html", gin.H{
 		"UserData": UserData,
 		"Token": token.Id,
@@ -50,7 +50,7 @@ func CommunityCreateHandler(c *gin.Context) {
 		c.Redirect(http.StatusMovedPermanently, url)
 	} else {
 		flashErrorMessage := FlashErrorMessage(c, store, "データを作成できませんでした")
-		router.LoadHTMLFiles("templates/layout.html", "templates/main/community/new.html")
+		router.LoadHTMLFiles("templates/main/layout.html", "templates/main/community/new.html")
 		c.HTML(http.StatusOK, "layout.html", gin.H{
 			"UserData": UserData,
 			"Token": token.Id,
