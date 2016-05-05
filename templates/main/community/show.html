@@ -2,6 +2,11 @@
   <h2>{{.Community.Name}}</h2>
   {{if eq .Community.AdministratorId .UserData.userid}}<span style="color: blue;">※管理者</span>{{end}}
   <h4>説明：{{.Community.Description}}</h4>
+  {{if .FlashSuccessMessage}}
+    <div class="success-message">
+      <p>※{{.FlashSuccessMessage}}</p>
+    </div>
+  {{end}}
   {{if .Messages}}
     {{if .FlashErrorDeleteMessage}}
       <p class="error-message">※{{.FlashErrorDeleteMessage}}</p>

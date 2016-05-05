@@ -18,11 +18,13 @@ func CommunityShowHandler(c *gin.Context) {
 	dbConnect.Debug().Where("community_id = ?", community_id).Find(&Messages)
 
 	router.LoadHTMLFiles("templates/main/layout.html", "templates/main/community/show.html")
+	flashSuccessMessage := GetSuccessMessage(c)
 	c.HTML(http.StatusOK, "layout.html", gin.H{
 		"Community": Community,
 		"Messages": Messages,
 		"UserData": UserData,
 		"Token": token.Id,
+		"FlashSuccessMessage": flashSuccessMessage,
 	})
 }
 
@@ -35,7 +37,6 @@ func CommunityNewHandler(c *gin.Context) {
 	})
 }
 
-// TODO:Flash Successメッセージ追加
 func CommunityCreateHandler(c *gin.Context) {
 	var form models.CommunityForm
 	c.Bind(&form)
@@ -47,9 +48,10 @@ func CommunityCreateHandler(c *gin.Context) {
 	if models.ValidCommunity(&form, token.Id) {
 		dbConnect.Debug().Create(&community)
 		url := fmt.Sprintf("/user/%s", UserData["name"])
+		FlashSuccessMessage(c, "コミュニティの作成に成功しました")
 		c.Redirect(http.StatusMovedPermanently, url)
 	} else {
-		flashErrorMessage := FlashErrorMessage(c, store, "データを作成できませんでした")
+		flashErrorMessage := FlashErrorMessage(c, "データを作成できませんでした")
 		router.LoadHTMLFiles("templates/main/layout.html", "templates/main/community/new.html")
 		c.HTML(http.StatusOK, "layout.html", gin.H{
 			"UserData": UserData,

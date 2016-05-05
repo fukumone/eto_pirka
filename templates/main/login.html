@@ -1,5 +1,10 @@
 {{define "content"}}
 <div class="container">
+  {{if .FlashMessage}}
+    <div class="error-message">
+      <p>※{{.FlashMessage}}</p>
+    </div>
+  {{end}}
   <div class="page-header">
     <h1>サインイン</h1>
   </div>

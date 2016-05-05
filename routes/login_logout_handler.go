@@ -25,7 +25,10 @@ func init() {
 
 func LoginHandler(c *gin.Context) {
 	router.LoadHTMLFiles("templates/main/layout.html", "templates/main/login.html")
-	c.HTML(http.StatusOK, "layout.html", nil)
+	flashMessage := GetSuccessMessage(c)
+	c.HTML(http.StatusOK, "layout.html", gin.H{
+		"FlashMessage": flashMessage,
+	})
 }
 
 func AuthenticateHandler(c *gin.Context) {
@@ -37,7 +40,7 @@ func AuthenticateHandler(c *gin.Context) {
 	if err != nil {
 		log.Fatalln("Error when trying to GetBeginAuthURL for", provider, "-", err)
 	}
-
+	FlashSuccessMessage(c, "ログインしました")
 	c.Writer.Header()["Location"] = []string{loginUrl}
 	c.Writer.WriteHeader(http.StatusTemporaryRedirect)
 }
@@ -94,6 +97,7 @@ func LogoutHandler(c *gin.Context) {
 		Value: "",
 		Path:  "/",
 	})
+	FlashSuccessMessage(c, "ログアウトしました")
 	c.Writer.Header()["Location"] = []string{"/login"}
 	c.Writer.WriteHeader(http.StatusTemporaryRedirect)
 }

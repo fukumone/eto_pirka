@@ -8,7 +8,6 @@ import (
 	"github.com/t-fukui/eto_pirka/models"
 )
 
-// TODO:Flash Successメッセージ追加
 func MessageCreateHandler(c *gin.Context) {
 	community_id := c.Params.ByName("id")
 	Community := models.Community{}
@@ -30,9 +29,10 @@ func MessageCreateHandler(c *gin.Context) {
 
 		url := fmt.Sprintf("/user/%s/community/show/%s", name, c.Params.ByName("id"))
 		dbConnect.Debug().Create(&message)
+		FlashSuccessMessage(c, "メッセージの作成に成功しました")
 		c.Redirect(http.StatusMovedPermanently, url)
 	} else {
-		flashErrorMessage := FlashErrorMessage(c, store, "データを作成できませんでした")
+		flashErrorMessage := FlashErrorMessage(c, "データを作成できませんでした")
 		router.LoadHTMLFiles("templates/main/layout.html", "templates/main/community/show.html")
 		c.HTML(http.StatusOK, "layout.html", gin.H{
 			"Community": Community,
@@ -49,7 +49,6 @@ type DeleteForm struct {
 	MessageId int
 }
 
-// TODO:Flash Successメッセージ追加
 func MessageDeleteHandler(c *gin.Context) {
 	token.CreateToken()
 	community_id := c.Params.ByName("id")
@@ -70,9 +69,10 @@ func MessageDeleteHandler(c *gin.Context) {
 	if models.CommnunityValidAdmin(Community, user_id) {
 		url := fmt.Sprintf("/user/%s/community/show/%s", name, c.Params.ByName("id"))
 		dbConnect.Debug().Delete(&Message)
+		FlashSuccessMessage(c, "メッセージの削除に成功しました")
 		c.Redirect(http.StatusMovedPermanently, url)
 	} else {
-		flashErrorMessage := FlashErrorMessage(c, store, "管理者権限がないので削除できません")
+		flashErrorMessage := FlashErrorMessage(c, "管理者権限がないので削除できません")
 
 		router.LoadHTMLFiles("templates/main/layout.html", "templates/main/community/show.html")
 		c.HTML(http.StatusOK, "layout.html", gin.H{

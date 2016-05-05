@@ -2,6 +2,11 @@
   <a href="/user/{{.UserData.name}}/community/new" class="btn btn-primary">コミュニティ新規作成</a>
   <h3><i class="fa fa-users" aria-hidden="true"></i>
 コミュニティ一覧</h3>
+  {{if .FlashSuccessMessage}}
+    <div class="success-message">
+      <p>※{{.FlashSuccessMessage}}</p>
+    </div>
+  {{end}}
   {{if .Communities}}
     <table class="table" style="width: 800px;">
       <tr>
