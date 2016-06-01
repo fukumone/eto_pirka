@@ -21,11 +21,12 @@ func envLoad() {
 	}
 }
 
-func InitDB() gorm.DB {
+func InitDB() *gorm.DB {
 	envLoad()
-	db, err := gorm.Open("mysql",
-		fmt.Sprintf("%s:@/%s?charset=utf8&parseTime=True&loc=Local",
-			os.Getenv("DB_USER_NAME"),
+
+	db, err := gorm.Open("mysql", fmt.Sprintf("%s:%s@/%s?charset=utf8mb4&parseTime=True&loc=Local",
+			os.Getenv("DATABASE_USER_NAME"),
+			os.Getenv("DATABASE_USER_PASSWORD"),
 			os.Getenv("DATABASE_NAME"),
 		))
 
