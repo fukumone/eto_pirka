@@ -4,7 +4,7 @@
 ### Install
 
 ```
-go get github.com/t-fukui/eto_pirka
+go get github.com/fukumone/eto_pirka
 ```
 
 ### Create Database

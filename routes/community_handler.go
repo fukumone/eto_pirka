@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"github.com/gin-gonic/gin"
-	"github.com/t-fukui/eto_pirka/models"
+	"github.com/fukumone/eto_pirka/models"
 )
 
 // TODO paginationを実装する(Message一覧)

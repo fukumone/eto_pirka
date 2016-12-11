@@ -2,7 +2,7 @@ package main
 
 import (
 	"runtime"
-	"github.com/t-fukui/eto_pirka/routes"
+	"github.com/fukumone/eto_pirka/routes"
 )
 
 func init() {

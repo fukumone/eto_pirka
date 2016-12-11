@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/sessions"
 
-	"github.com/t-fukui/eto_pirka/db"
+	"github.com/fukumone/eto_pirka/db"
 )
 
 var (

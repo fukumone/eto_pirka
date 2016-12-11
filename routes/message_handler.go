@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"net/http"
 	"github.com/gin-gonic/gin"
-	"github.com/t-fukui/eto_pirka/models"
+	"github.com/fukumone/eto_pirka/models"
 )
 
 func MessageCreateHandler(c *gin.Context) {
